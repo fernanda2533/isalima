@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Isadora Lima | Catálogo Digital & Bio</title>
+    
+    <!-- Meta Tags para WhatsApp / Redes Sociais -->
+    <meta name="description" content="Catálogo digital interativo da Personal Trainer Isadora Lima. Planos presenciais, modalidades de treino, aplicativo exclusivo e contato direto no WhatsApp." />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Isadora Lima — Personal Trainer" />
+    <meta property="og:description" content="Seu corpo. Sua rotina. Sua evolução. Conheça os planos, modalidades e valores de acompanhamento." />
+    <meta property="og:image" content="assets/isa-lima-hero.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="theme-color" content="#FAFAF9" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo-transparent.png" />
+    <link rel="apple-touch-icon" href="assets/logo-transparent.png" />
+
+    <!-- Google Fonts: Outfit (Títulos), Plus Jakarta Sans (Texto), Space Mono (Preços e Dados) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    
+    <!-- Material Symbols Outlined (Ícones limpos, zero emojis) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'canvas-cream': '#FAFAF9',
+                        'pure-surface': '#FFFFFF',
+                        'stone-ink': '#1C1917',
+                        'stone-muted': '#78716C',
+                        'stone-light': '#A8A29E',
+                        'rose-blush': '#E3A8B1',
+                        'rose-deep': '#815159',
+                        'rose-dark': '#5C2D35',
+                        'rose-soft': '#FADEE2',
+                        'rose-tint': '#FDF8F9',
+                        'whisper-border': 'rgba(227, 168, 177, 0.32)',
+                        'whisper-dark': 'rgba(28, 25, 23, 0.08)'
+                    },
+                    fontFamily: {
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace']
+                    },
+                    borderRadius: {
+                        'bio-card': '1.75rem',
+                        'bio-inner': '1.25rem',
+                        'pill': '9999px'
+                    },
+                    boxShadow: {
+                        'bio': '0 8px 30px -4px rgba(28, 25, 23, 0.05), 0 2px 10px -2px rgba(227, 168, 177, 0.15)',
+                        'bio-focus': '0 12px 36px -6px rgba(129, 81, 89, 0.22)',
+                        'float-bar': '0 -6px 24px -4px rgba(28, 25, 23, 0.08), 0 10px 30px -5px rgba(227, 168, 177, 0.25)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Formato Sitebio: Canvas centrado e mobile-first */
+        body {
+            background-color: #F7F4F2;
+            color: #1C1917;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                background-color: #FAFAF9;
+            }
+        }
+
+        /* Container do dispositivo mobile / sitebio */
+        .bio-app-container {
+            max-width: 440px;
+            margin: 0 auto;
+            min-height: 100dvh;
+            background-color: #FAFAF9;
+            box-shadow: 0 0 50px -10px rgba(28, 25, 23, 0.1);
+            position: relative;
+        }
+
+        /* Material Symbols setup */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        .material-symbols-outlined.fill-1 {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Feedback tátil nos botões */
+        .btn-press {
+            transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.4, 1), background-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn-press:active {
+            transform: scale(0.975);
+        }
+
+        /* Glassmorphism sutil */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(227, 168, 177, 0.35);
+        }
+
+        /* Barra de rolagem discreta */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAF9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E3A8B1;
+            border-radius: 9999px;
+        }
+
+        /* Esconder barra de rolagem em carrosséis horizontais no mobile */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Safe area para telas com notch / home indicator */
+        .safe-bottom {
+            padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+        }
+    </style>
+</head>
+<body class="selection:bg-rose-soft selection:text-rose-dark">
+
+    <!-- ========================================================
+         CONFIGURAÇÃO CENTRALIZADA (Valores, WhatsApp & Links)
+         ======================================================== -->
+    <script>
+        window.ISA_BIO = {
+            whatsappNumber: "5511949255517",
+            whatsappDisplay: "(11) 94925-5517",
+            instagram: "isallimapersonal",
+            instagramUrl: "https://www.instagram.com/isallimapersonal/",
+            siteOficial: "index.html",
+            planos: [
+                {
+                    id: "bronze",
+                    nome: "Plano Bronze",
+                    categoria: "individual",
+                    frequencia: "2x por semana",
+                    aulas: "8 aulas no mês",
+                    valor: "R$ 700",
+                    sufixo: "/ mês",
+                    tag: "Consistência",
+                    destaque: false,
+                    descricao: "Ideal para quem quer consistência e um acompanhamento próximo para garantir o progresso.",
+                    beneficios: [
+                        "8 aulas presenciais com supervisão direta",
+                        "Correções posturais e técnicas em tempo real",
+                        "App exclusivo com ficha de treino atualizada",
+                        "Vídeos demonstrativos de cada execução"
+                    ],
+                    msgWhats: "Olá Isa! Quero saber mais sobre o Plano Bronze (2x na semana - R$ 700/mês)."
+                },
+                {
+                    id: "prata",
+                    nome: "Plano Prata",
+                    categoria: "individual",
+                    frequencia: "3x por semana",
+                    aulas: "12 aulas no mês",
+                    valor: "R$ 950",
+                    sufixo: "/ mês",
+                    tag: "Mais Procurado",
+                    destaque: true,
+                    descricao: "Para quem está focado e quer uma transformação corporal progressiva.",
+                    beneficios: [
+                        "12 aulas presenciais no mês (3x na semana)",
+                        "Ritmo ideal para queima e hipertrofia progressiva",
+                        "Periodização constante com ajuste semanal de cargas",
+                        "App exclusivo com suporte organizado e vídeos"
+                    ],
+                    msgWhats: "Olá Isa! Tenho interesse no Plano Prata (3x na semana - R$ 950/mês)."
+                },
+                {
+                    id: "ouro",
+                    nome: "Plano Ouro",
+                    categoria: "individual",
+                    frequencia: "4x por semana",
+                    aulas: "16 aulas no mês",
+                    valor: "R$ 1.400",
+                    sufixo: "/ mês",
+                    tag: "Alta Intensidade",
+                    destaque: false,
+                    descricao: "Para quem está totalmente focado e quer uma transformação corporal mais rápida e intensa.",
+                    beneficios: [
+                        "16 aulas presenciais no mês (4x na semana)",
+                        "Resultados acelerados de definição e postura",
+                        "Controle milimétrico de técnica, intervalo e descanso",
+                        "App exclusivo com rotina de treino atualizada"
+                    ],
+                    msgWhats: "Olá Isa! Gostaria de iniciar no Plano Ouro (4x na semana - R$ 1.400/mês)."
+                },
+                {
+                    id: "plus",
+                    nome: "Plano Plus",
+                    categoria: "individual",
+                    frequencia: "5x por semana",
+                    aulas: "20 aulas no mês",
+                    valor: "R$ 1.700",
+                    sufixo: "/ mês",
+                    tag: "Acompanhamento Definitivo",
+                    destaque: false,
+                    descricao: "O acompanhamento definitivo. Máximo comprometimento para uma transformação completa de corpo e mente.",
+                    beneficios: [
+                        "20 aulas presenciais no mês (segunda a sexta-feira)",
+                        "Supervisão diária com máxima segurança e foco",
+                        "Transformação corporal sólida e hábitos sustentáveis",
+                        "App exclusivo com suporte diário e prioritário"
+                    ],
+                    msgWhats: "Olá Isa! Quero fazer o acompanhamento definitivo no Plano Plus (5x na semana - R$ 1.700/mês)."
+                },
+                {
+                    id: "duplinha",
+                    nome: "Plano Duplinha",
+                    categoria: "dupla",
+                    frequencia: "2x por semana",
+                    aulas: "8 aulas no mês / pessoa",
+                    valor: "R$ 500",
+                    sufixo: "/ pessoa",
+                    tag: "Treino em Parceria",
+                    destaque: true,
+                    descricao: "Ideal para quem quer treinar em conjunto. Chame seu par ideal e vamos crescer juntos.",
+                    beneficios: [
+                        "8 aulas presenciais no mês para duas pessoas",
+                        "Treinos motivadores e dinâmicos lado a lado",
+                        "Atenção técnica e prescrição personalizada para ambos",
+                        "Acesso de cada aluno ao aplicativo exclusivo"
+                    ],
+                    msgWhats: "Olá Isa! Queremos saber mais sobre o Plano Duplinha (R$ 500/pessoa - 2x na semana)."
+                }
+            ],
+            depoimentos: [
+                {
+                    nome: "Jessica Amorim",
+                    foto: "assets/jessica-amorim.jpg",
+                    tag: "Aluna há 6 meses",
+                    texto: "Treino há muitos anos e posso dizer, com toda sinceridade, que esses últimos seis meses com a Isa fizeram toda a diferença. Eu treinava há bastante tempo, mas não via evolução de verdade. Hoje, meu corpo mudou, minha postura mudou e minha força também. O mais impressionante é que ela conseguiu me tirar da zona de conforto. Eu nem treinava ombros e hoje faço questão de treinar, porque entendi a importância de um treino completo. O resultado está aparecendo: minhas costas estão muito mais definidas, meu corpo está respondendo e eu voltei a sentir prazer em evoluir a cada treino."
+                },
+                {
+                    nome: "Nycole Oliveira",
+                    foto: "assets/nycole-oliveira.jpg",
+                    tag: "Aluna",
+                    texto: "Comecei a treinar com a Isa por necessidade de melhorar minha saúde física e mental, e hoje faço por prazer também! Treinar com a Isa é muito mais do que cumprir um treino, é ter um espaço para ser ouvida e acolhida. É saber que todo desafio proposto tem como objetivo nos motivar a ser cada vez melhores. Se você busca um espaço para se cuidar para além da performance, com certeza treinar com ela é uma excelente escolha!"
+                },
+                {
+                    nome: "Rose Aguiar",
+                    foto: "assets/rose-aguiar.jpg",
+                    tag: "Aluna há quase 1 ano",
+                    texto: "A Isa é a melhor personal! Sempre muito atenciosa e dedicada. Ela planejou meus treinos de acordo com as minhas necessidades e com a minha rotina. Já treino com ela há quase 1 ano e super recomendo o trabalho dela! Se você está desanimado para começar a treinar ou acha que não tem tempo, a Isa consegue montar um treino totalmente personalizado para a sua realidade. Eu, por exemplo, tenho pouquíssimo tempo nas manhãs, e ela criou um planejamento que cabe perfeitamente na minha rotina, sem comprometer meu trabalho. Parabéns pelo seu profissionalismo e por cuidar de cada aluno de forma tão individualizada. Você faz toda a diferença!"
+                },
+                {
+                    nome: "Manuella",
+                    foto: "assets/manuella.jpg",
+                    tag: "Aluna",
+                    texto: "A Isa faz a gente sofrer, mas pelo menos faz a gente rir também. As aulas são muito boas, super leves e divertidas, e no final parece até uma sessão de terapia. Você chega cansada da vida e sai cansada do treino, mas muito mais alegre!"
+                },
+                {
+                    nome: "Juliana",
+                    foto: "assets/juliana.jpg",
+                    tag: "Aluna",
+                    texto: "Gosto muito das aulas. A Isadora explica muito bem o que precisa ser feito e gosto de como os exercícios não são repetitivos. Além disso, gosto muito das conversas que temos durante o treino que sempre deixa tudo mais divertido."
+                },
+                {
+                    nome: "João Bacchetti",
+                    foto: "assets/joao-bacchetti.jpg",
+                    tag: "Aluno",
+                    texto: "Isa Lima é uma profissional preparada para orientar exercícios funcionais que eu procurava e já vejo resultados positivos no dia a dia. Além de ser excelente companhia na hora do treino. Recomendo."
+                },
+                {
+                    nome: "Fernanda Rodrigues",
+                    foto: "assets/fernanda-rodrigues.png",
+                    tag: "Aluna",
+                    texto: "Grata em fazer parte desse time que me faz ir cada vez mais além. Desde que iniciei meu acompanhamento com a Isa, vejo meu corpo se desenvolver como nunca."
+                }
+            ]
+        };
+    </script>
+
+    <!-- CONTAINER PRINCIPAL DO SITEBIO -->
+    <div class="bio-app-container flex flex-col justify-between">
+
+        <!-- CONTEÚDO SCROLLÁVEL -->
+        <div class="px-5 pt-8 pb-32 space-y-6">
+
+            <!-- ====================================================
+                 1. PERFIL / HEADER DO SITEBIO
+                 ==================================================== -->
+            <div class="text-center flex flex-col items-center">
+                
+                <!-- Avatar Circular com Anel de Destaque -->
+                <div class="relative mb-3">
+                    <div class="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-rose-blush via-rose-soft to-rose-deep shadow-md">
+                        <div class="w-full h-full rounded-full overflow-hidden bg-white">
+                            <img src="assets/isadora.png" 
+                                 alt="Isadora Lima" 
+                                 class="w-full h-full object-cover object-top scale-125 pt-1" />
+                        </div>
+                    </div>
+                    <!-- Selo de Verificação -->
+                    <div class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-rose-deep text-white border-2 border-white flex items-center justify-center shadow-sm">
+                        <span class="material-symbols-outlined text-sm font-bold fill-1">verified</span>
+                    </div>
+                </div>
+
+                <!-- Nome e Título -->
+                <h1 class="font-display font-extrabold text-2xl text-stone-ink tracking-tight flex items-center justify-center gap-1.5">
+                    Isadora Lima
+                </h1>
+                
+                <p class="font-mono text-xs text-rose-deep font-semibold uppercase tracking-widest mt-0.5">
+                    Personal Trainer
+                </p>
+
+                <!-- Tagline Conceitual -->
+                <p class="font-body text-xs text-stone-muted mt-2 max-w-xs leading-relaxed">
+                    <span class="font-semibold text-stone-ink">Seu corpo. Sua rotina. Sua evolução.</span><br />
+                    Treinamento personalizado focado em saúde, técnica e constância.
+                </p>
+
+                <!-- Status de Atendimento -->
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-pill bg-rose-soft/50 border border-whisper-border mt-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-mono text-[10px] text-stone-ink font-semibold uppercase tracking-wider">
+                        Atendimento Presencial & Consultoria
+                    </span>
+                </div>
+
+                <!-- Ações Rápidas do Cabeçalho (Pills) -->
+                <div class="flex items-center gap-2 mt-4 w-full">
+                    <a href="https://wa.me/5511949255517?text=Ol%C3%A1%20Isa!%20Achei%20seu%20cat%C3%A1logo%20e%20gostaria%20de%20conversar." 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="btn-press flex-1 py-3 px-4 rounded-pill bg-stone-ink text-white hover:bg-rose-deep font-display font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
+                        <span class="material-symbols-outlined text-base text-rose-blush fill-1">chat</span>
+                        <span>Falar no WhatsApp</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/isallimapersonal/" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="btn-press py-3 px-3.5 rounded-pill bg-pure-surface border border-whisper-border text-stone-ink hover:text-rose-deep flex items-center justify-center shadow-xs" 
+                       aria-label="Instagram">
+                        <span class="material-symbols-outlined text-lg">alternate_email</span>
+                    </a>
+
+                    <a href="index.html" 
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn-press py-3 px-3.5 rounded-pill bg-pure-surface border border-whisper-border text-stone-ink hover:text-rose-deep flex items-center justify-center shadow-xs" 
+                       title="Acessar Website Oficial">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- ====================================================
+                 2. NAVEGAÇÃO INTERNA RÁPIDA (Menu de Categorias)
+                 ==================================================== -->
+            <div class="flex items-center justify-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+                <a href="#cat-planos" class="px-3.5 py-1.5 rounded-pill bg-pure-surface border border-whisper-border text-[11px] font-display font-semibold text-stone-ink hover:border-rose-deep transition-colors whitespace-nowrap shadow-xs">
+                    Planos & Preços
+                </a>
+                <a href="#cat-modalidades" class="px-3.5 py-1.5 rounded-pill bg-pure-surface border border-whisper-border text-[11px] font-display font-semibold text-stone-ink hover:border-rose-deep transition-colors whitespace-nowrap shadow-xs">
+                    Modalidades
+                </a>
+                <a href="#cat-app" class="px-3.5 py-1.5 rounded-pill bg-pure-surface border border-whisper-border text-[11px] font-display font-semibold text-stone-ink hover:border-rose-deep transition-colors whitespace-nowrap shadow-xs">
+                    App Incluso
+                </a>
+                <a href="#cat-depoimentos" class="px-3.5 py-1.5 rounded-pill bg-pure-surface border border-whisper-border text-[11px] font-display font-semibold text-stone-ink hover:border-rose-deep transition-colors whitespace-nowrap shadow-xs">
+                    Alunos
+                </a>
+                <a href="#cat-faq" class="px-3.5 py-1.5 rounded-pill bg-pure-surface border border-whisper-border text-[11px] font-display font-semibold text-stone-ink hover:border-rose-deep transition-colors whitespace-nowrap shadow-xs">
+                    Dúvidas
+                </a>
+            </div>
+
+            <!-- ====================================================
+                 3. CARD PRINCIPAL: CATÁLOGO DE PLANOS & VALORES
+                 Apresentação dos pacotes de acompanhamento
+                 ==================================================== -->
+            <div id="cat-planos" class="glass-card rounded-bio-card p-5 shadow-bio">
+                
+                <!-- Cabeçalho do Card -->
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-rose-soft flex items-center justify-center text-rose-deep">
+                            <span class="material-symbols-outlined text-base">payments</span>
+                        </div>
+                        <div>
+                            <h2 class="font-display font-bold text-base text-stone-ink">Planos de Acompanhamento</h2>
+                            <p class="font-mono text-[9px] text-stone-muted uppercase">Supervisão Presencial Sob Medida</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descrição Oficial do Presencial (do PDF) -->
+                <p class="font-body text-xs text-stone-muted leading-relaxed mb-4 bg-rose-tint p-3 rounded-bio-inner border border-whisper-border">
+                    O plano presencial é para você que busca a máxima performance e segurança, com minha supervisão direta em cada exercício. Garanto a técnica ideal, a motivação extra e os ajustes necessários em tempo real.
+                </p>
+
+                <!-- Alternador de Categoria de Planos -->
+                <div class="grid grid-cols-2 p-1 rounded-pill bg-stone-100 border border-whisper-dark mb-4 text-center">
+                    <button id="bio-tab-ind" 
+                            onclick="setBioPlanCategory('individual')"
+                            class="py-1.5 rounded-pill font-display text-xs font-bold bg-white text-stone-ink shadow-xs transition-all">
+                        Individual
+                    </button>
+                    <button id="bio-tab-dup" 
+                            onclick="setBioPlanCategory('dupla')"
+                            class="py-1.5 rounded-pill font-display text-xs font-semibold text-stone-muted hover:text-stone-ink transition-all">
+                        Duplinha (2 Pessoas)
+                    </button>
+                </div>
+
+                <!-- Lista de Planos Interativos -->
+                <div id="bio-plans-list" class="space-y-3">
+                    <!-- Renderizado dinamicamente via JS -->
+                </div>
+            </div>
+
+            <!-- ====================================================
+                 4. CARD: DIFERENCIAL — APLICATIVO EXCLUSIVO INCLUSO
+                 O diferencial de ter acompanhamento fora da aula
+                 ==================================================== -->
+            <div id="cat-app" class="glass-card rounded-bio-card p-5 shadow-bio relative overflow-hidden bg-gradient-to-br from-pure-surface via-[#FCF8F9] to-pure-surface">
+                
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="px-2.5 py-0.5 rounded-pill bg-rose-deep text-white font-mono text-[9px] font-bold uppercase tracking-wider">
+                        Incluso em Todos os Planos
+                    </span>
+                </div>
+
+                <h3 class="font-display font-bold text-base text-stone-ink mb-1">
+                    Aplicativo Exclusivo no Seu Celular
+                </h3>
+
+                <p class="font-body text-xs text-stone-muted leading-relaxed mb-3">
+                    O aluno tem acesso ao aplicativo exclusivo, onde disponibiliza ficha de treino sempre atualizada, vídeos detalhados das execuções e todo o acompanhamento organizado de forma prática.
+                </p>
+
+                <!-- 3 Pilares do App -->
+                <div class="grid grid-cols-3 gap-2 pt-1 text-center font-body">
+                    <div class="p-2.5 rounded-bio-inner bg-pure-surface border border-whisper-border">
+                        <span class="material-symbols-outlined text-rose-deep text-lg mb-1 block">edit_note</span>
+                        <span class="font-display font-bold text-[11px] text-stone-ink block leading-tight">Ficha Atualizada</span>
+                        <span class="font-mono text-[9px] text-stone-muted">Periodização</span>
+                    </div>
+
+                    <div class="p-2.5 rounded-bio-inner bg-pure-surface border border-whisper-border">
+                        <span class="material-symbols-outlined text-rose-deep text-lg mb-1 block">smart_display</span>
+                        <span class="font-display font-bold text-[11px] text-stone-ink block leading-tight">Vídeos de Execução</span>
+                        <span class="font-mono text-[9px] text-stone-muted">Demonstração</span>
+                    </div>
+
+                    <div class="p-2.5 rounded-bio-inner bg-pure-surface border border-whisper-border">
+                        <span class="material-symbols-outlined text-rose-deep text-lg mb-1 block">task_alt</span>
+                        <span class="font-display font-bold text-[11px] text-stone-ink block leading-tight">Histórico Prático</span>
+                        <span class="font-mono text-[9px] text-stone-muted">Evolução</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ====================================================
+                 5. CARD: MODALIDADES DE TREINAMENTO
+                 ==================================================== -->
+            <div id="cat-modalidades" class="glass-card rounded-bio-card p-5 shadow-bio">
+                
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-rose-soft flex items-center justify-center text-rose-deep">
+                            <span class="material-symbols-outlined text-base">exercise</span>
+                        </div>
+                        <div>
+                            <h2 class="font-display font-bold text-base text-stone-ink">Modalidades de Treino</h2>
+                            <p class="font-mono text-[9px] text-stone-muted uppercase">Serviços Disponíveis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                    
+                    <!-- 1. Musculação -->
+                    <div class="rounded-bio-inner overflow-hidden border border-whisper-border bg-pure-surface flex flex-col justify-between">
+                        <div class="h-24 w-full overflow-hidden bg-stone-100 relative">
+                            <img src="assets/modalidade-musculacao.jpg" alt="Musculação" class="w-full h-full object-cover" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 font-display font-bold text-xs text-white">Musculação</span>
+                        </div>
+                        <div class="p-2.5 text-[11px] text-stone-muted leading-tight">
+                            Força, hipertrofia e sustentação com técnica ideal.
+                        </div>
+                    </div>
+
+                    <!-- 2. Funcional -->
+                    <div class="rounded-bio-inner overflow-hidden border border-whisper-border bg-pure-surface flex flex-col justify-between">
+                        <div class="h-24 w-full overflow-hidden bg-stone-100 relative">
+                            <img src="assets/modalidade-funcional.jpg" alt="Funcional" class="w-full h-full object-cover" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 font-display font-bold text-xs text-white">Funcional</span>
+                        </div>
+                        <div class="p-2.5 text-[11px] text-stone-muted leading-tight">
+                            Agilidade, resistência e movimento dinâmico.
+                        </div>
+                    </div>
+
+                    <!-- 3. Acompanhamento On-line -->
+                    <div class="rounded-bio-inner overflow-hidden border border-whisper-border bg-pure-surface flex flex-col justify-between">
+                        <div class="h-24 w-full overflow-hidden bg-stone-100 relative">
+                            <img src="assets/modalidade-online.jpg" alt="Acompanhamento On-line" class="w-full h-full object-cover" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 font-display font-bold text-xs text-white">On-line</span>
+                        </div>
+                        <div class="p-2.5 text-[11px] text-stone-muted leading-tight">
+                            Prescrição no app e suporte para treinar onde estiver.
+                        </div>
+                    </div>
+
+                    <!-- 4. Alongamento -->
+                    <div class="rounded-bio-inner overflow-hidden border border-whisper-border bg-pure-surface flex flex-col justify-between">
+                        <div class="h-24 w-full overflow-hidden bg-stone-100 relative">
+                            <img src="assets/modalidade-alongamento.jpg" alt="Alongamento" class="w-full h-full object-cover" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 font-display font-bold text-xs text-white">Alongamento</span>
+                        </div>
+                        <div class="p-2.5 text-[11px] text-stone-muted leading-tight">
+                            Mobilidade, alívio de tensões e prevenção articular.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ====================================================
+                 6. CARD: QUEM TREINA COM A ISA (Stories / Depoimentos)
+                 Depoimentos reais dos 7 alunos com fotos
+                 ==================================================== -->
+            <div id="cat-depoimentos" class="glass-card rounded-bio-card p-5 shadow-bio">
+                
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-rose-soft flex items-center justify-center text-rose-deep">
+                            <span class="material-symbols-outlined text-base">forum</span>
+                        </div>
+                        <div>
+                            <h2 class="font-display font-bold text-base text-stone-ink">Quem Treina com a Isa</h2>
+                            <p class="font-mono text-[9px] text-stone-muted uppercase">Experiência dos Alunos</p>
+                        </div>
+                    </div>
+                    <!-- Controles do carrossel -->
+                    <div class="flex items-center gap-1">
+                        <button onclick="prevStory()" class="w-7 h-7 rounded-full bg-stone-100 hover:bg-rose-soft text-stone-ink flex items-center justify-center" aria-label="Depoimento anterior">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span>
+                        </button>
+                        <button onclick="nextStory()" class="w-7 h-7 rounded-full bg-stone-100 hover:bg-rose-soft text-stone-ink flex items-center justify-center" aria-label="Próximo depoimento">
+                            <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Exibição Ativa de Histórias dos Alunos -->
+                <div id="story-container" class="rounded-bio-inner bg-pure-surface border border-whisper-border p-4 transition-all">
+                    <!-- Preenchido dinamicamente por JS -->
+                </div>
+
+                <!-- Miniaturas de seleção rápida -->
+                <div class="flex items-center justify-between gap-1 mt-3 overflow-x-auto no-scrollbar py-1" id="story-thumbnails">
+                    <!-- Gerado dinamicamente -->
+                </div>
+
+            </div>
+
+
+            <!-- ====================================================
+                 8. CARD: DÚVIDAS RÁPIDAS (FAQ)
+                 ==================================================== -->
+            <div id="cat-faq" class="glass-card rounded-bio-card p-5 shadow-bio">
+                
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-7 h-7 rounded-full bg-rose-soft flex items-center justify-center text-rose-deep">
+                        <span class="material-symbols-outlined text-base">help</span>
+                    </div>
+                    <div>
+                        <h2 class="font-display font-bold text-base text-stone-ink">Dúvidas Rápidas</h2>
+                        <p class="font-mono text-[9px] text-stone-muted uppercase">Perguntas Frequentes</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="rounded-bio-inner border border-whisper-border bg-pure-surface overflow-hidden">
+                        <button onclick="toggleBioFaq(this)" class="w-full p-3 text-left flex items-center justify-between text-xs font-display font-bold text-stone-ink">
+                            <span>Quanto tempo leva para ver resultados?</span>
+                            <span class="material-symbols-outlined text-rose-deep text-base transition-transform">expand_more</span>
+                        </button>
+                        <div class="hidden px-3 pb-3 pt-0 text-[11px] font-body text-stone-muted leading-relaxed border-t border-whisper-border/50">
+                            A evolução varia conforme a individualidade e a rotina de cada pessoa, mas com treinamento consistente e acompanhamento técnico, a maioria dos alunos começa a notar resultados visíveis já nas primeiras semanas.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="rounded-bio-inner border border-whisper-border bg-pure-surface overflow-hidden">
+                        <button onclick="toggleBioFaq(this)" class="w-full p-3 text-left flex items-center justify-between text-xs font-display font-bold text-stone-ink">
+                            <span>Posso cancelar a qualquer momento?</span>
+                            <span class="material-symbols-outlined text-rose-deep text-base transition-transform">expand_more</span>
+                        </button>
+                        <div class="hidden px-3 pb-3 pt-0 text-[11px] font-body text-stone-muted leading-relaxed border-t border-whisper-border/50">
+                            Mínimo de 30 dias de antecedência.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ====================================================
+                 9. CANAIS & CONTATOS OFICIAIS
+                 ==================================================== -->
+            <div class="glass-card rounded-bio-card p-4 shadow-bio text-center space-y-2">
+                <span class="font-mono text-[9px] text-stone-muted uppercase tracking-wider block">
+                    Canais Diretos de Atendimento
+                </span>
+
+                <div class="grid grid-cols-2 gap-2 text-xs font-mono font-semibold">
+                    <a href="https://wa.me/5511949255517" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-bio-inner bg-pure-surface border border-whisper-border flex items-center justify-center gap-1.5 hover:border-rose-deep transition-colors">
+                        <span class="material-symbols-outlined text-sm text-emerald-600">call</span>
+                        <span>(11) 94925-5517</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/isallimapersonal/" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-bio-inner bg-pure-surface border border-whisper-border flex items-center justify-center gap-1.5 hover:border-rose-deep transition-colors">
+                        <span class="material-symbols-outlined text-sm text-rose-deep">alternate_email</span>
+                        <span>@isallimapersonal</span>
+                    </a>
+                </div>
+
+                <a href="index.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-body text-stone-muted hover:text-stone-ink underline pt-1">
+                    <span>Acessar website completo (isalimapersonal.netlify.app)</span>
+                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                </a>
+            </div>
+
+            <!-- Rodapé Discreto do Catálogo -->
+            <div class="text-center pt-2 pb-4 text-[10px] font-mono text-stone-muted">
+                Isadora Lima • Digital Training Experience
+            </div>
+
+        </div>
+
+        <!-- ========================================================
+             BARRA FIXA FLUTUANTE INFERIOR (CTA PRINCIPAL NO POLEGAR)
+             ======================================================== -->
+        <div class="fixed bottom-0 left-0 right-0 z-50 pointer-events-none flex justify-center">
+            <div class="w-full max-w-[440px] px-4 pb-4 pt-2 bg-gradient-to-t from-[#FAFAF9] via-[#FAFAF9]/95 to-transparent pointer-events-auto safe-bottom">
+                <a href="https://wa.me/5511949255517?text=Ol%C3%A1%20Isa!%20Vim%20pelo%20seu%20cat%C3%A1logo%20digital%20e%20gostaria%20de%20conversar%20sobre%20os%20planos." 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="btn-press w-full py-4 px-6 rounded-pill bg-rose-deep hover:bg-rose-dark text-white font-display font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-float-bar">
+                    <span class="material-symbols-outlined text-xl text-rose-soft fill-1">chat</span>
+                    <span>Conversar com a Isa no WhatsApp</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================================
+         SCRIPTS: Lógica do Catálogo Interativo
+         ======================================================== -->
+    <script>
+        // 1. Renderizador de Planos do Catálogo
+        let currentBioCategory = 'individual';
+
+        function renderBioPlans(category) {
+            const container = document.getElementById('bio-plans-list');
+            if (!container) return;
+
+            const filtered = window.ISA_BIO.planos.filter(p => p.categoria === category);
+
+            container.innerHTML = filtered.map((plano, idx) => `
+                <div class="rounded-bio-inner p-4 transition-all ${
+                    plano.destaque 
+                        ? 'bg-gradient-to-br from-[#FFF5F7] to-pure-surface border-2 border-rose-blush shadow-xs' 
+                        : 'bg-pure-surface border border-whisper-border'
+                }">
+                    <!-- Header do Plano -->
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-display font-bold text-sm text-stone-ink">${plano.nome}</span>
+                            ${plano.destaque ? `
+                                <span class="px-2 py-0.5 rounded-pill bg-rose-deep text-white font-mono text-[8px] font-bold uppercase tracking-wider">
+                                    ${plano.tag}
+                                </span>
+                            ` : ''}
+                        </div>
+                        <span class="font-mono text-xs font-semibold text-rose-deep">${plano.frequencia}</span>
+                    </div>
+
+                    <!-- Preço & Frequência -->
+                    <div class="flex items-baseline gap-1 my-2">
+                        <span class="font-mono text-xl font-extrabold text-stone-ink">${plano.valor}</span>
+                        <span class="font-body text-xs text-stone-muted">${plano.sufixo}</span>
+                        <span class="font-mono text-[10px] text-stone-muted ml-auto">${plano.aulas}</span>
+                    </div>
+
+                    <!-- Descrição curta -->
+                    <p class="font-body text-xs text-stone-muted leading-relaxed mb-3">
+                        ${plano.descricao}
+                    </p>
+
+                    <!-- Benefícios -->
+                    <div class="space-y-1.5 mb-3 text-[11px] font-body text-stone-ink">
+                        ${plano.beneficios.map(b => `
+                            <div class="flex items-start gap-1.5">
+                                <span class="material-symbols-outlined text-rose-deep text-xs shrink-0 mt-0.5">check</span>
+                                <span>${b}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Botão de WhatsApp Específico para o Plano -->
+                    <a href="https://wa.me/${window.ISA_BIO.whatsappNumber}?text=${encodeURIComponent(plano.msgWhats)}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="btn-press w-full py-2.5 px-3 rounded-pill font-display font-semibold text-xs flex items-center justify-center gap-1.5 ${
+                           plano.destaque 
+                               ? 'bg-stone-ink text-white hover:bg-rose-deep' 
+                               : 'bg-rose-tint text-rose-dark border border-whisper-border hover:bg-rose-soft'
+                       }">
+                        <span>Escolher ${plano.nome}</span>
+                        <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        function setBioPlanCategory(cat) {
+            currentBioCategory = cat;
+            const btnInd = document.getElementById('bio-tab-ind');
+            const btnDup = document.getElementById('bio-tab-dup');
+
+            if (cat === 'individual') {
+                btnInd.className = 'py-1.5 rounded-pill font-display text-xs font-bold bg-white text-stone-ink shadow-xs transition-all';
+                btnDup.className = 'py-1.5 rounded-pill font-display text-xs font-semibold text-stone-muted hover:text-stone-ink transition-all';
+            } else {
+                btnDup.className = 'py-1.5 rounded-pill font-display text-xs font-bold bg-white text-stone-ink shadow-xs transition-all';
+                btnInd.className = 'py-1.5 rounded-pill font-display text-xs font-semibold text-stone-muted hover:text-stone-ink transition-all';
+            }
+            renderBioPlans(cat);
+        }
+
+        // 2. Carrossel / Stories dos Depoimentos
+        let currentStoryIndex = 0;
+
+        function renderStory(index) {
+            const container = document.getElementById('story-container');
+            if (!container) return;
+
+            const story = window.ISA_BIO.depoimentos[index];
+            container.innerHTML = `
+                <div class="flex items-center gap-3 mb-2.5">
+                    <img src="${story.foto}" alt="${story.nome}" class="w-11 h-11 rounded-full object-cover border-2 border-rose-blush" />
+                    <div>
+                        <h4 class="font-display font-bold text-xs text-stone-ink">${story.nome}</h4>
+                        <span class="font-mono text-[9px] text-rose-deep uppercase font-semibold">${story.tag}</span>
+                    </div>
+                    <span class="font-mono text-[9px] text-stone-muted ml-auto">${index + 1} de ${window.ISA_BIO.depoimentos.length}</span>
+                </div>
+                <p class="font-body text-xs text-stone-ink/85 leading-relaxed italic">
+                    "${story.texto}"
+                </p>
+            `;
+
+            // Atualiza miniaturas
+            renderThumbnails(index);
+        }
+
+        function renderThumbnails(activeIndex) {
+            const thumbContainer = document.getElementById('story-thumbnails');
+            if (!thumbContainer) return;
+
+            thumbContainer.innerHTML = window.ISA_BIO.depoimentos.map((s, idx) => `
+                <button onclick="goToStory(${idx})" class="w-8 h-8 rounded-full p-0.5 shrink-0 transition-transform ${
+                    idx === activeIndex 
+                        ? 'ring-2 ring-rose-deep scale-110' 
+                        : 'opacity-60 hover:opacity-100'
+                }" aria-label="Ver depoimento de ${s.nome}">
+                    <img src="${s.foto}" alt="${s.nome}" class="w-full h-full rounded-full object-cover" />
+                </button>
+            `).join('');
+        }
+
+        function nextStory() {
+            currentStoryIndex = (currentStoryIndex + 1) % window.ISA_BIO.depoimentos.length;
+            renderStory(currentStoryIndex);
+        }
+
+        function prevStory() {
+            currentStoryIndex = (currentStoryIndex - 1 + window.ISA_BIO.depoimentos.length) % window.ISA_BIO.depoimentos.length;
+            renderStory(currentStoryIndex);
+        }
+
+        function goToStory(idx) {
+            currentStoryIndex = idx;
+            renderStory(currentStoryIndex);
+        }
+
+        // 3. FAQ Toggle
+        function toggleBioFaq(btn) {
+            const answer = btn.nextElementSibling;
+            const icon = btn.querySelector('.material-symbols-outlined');
+            const isHidden = answer.classList.contains('hidden');
+
+            document.querySelectorAll('#cat-faq .hidden').forEach(el => {
+                if (el !== answer) el.classList.add('hidden');
+            });
+
+            if (isHidden) {
+                answer.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBioPlans('individual');
+            renderStory(0);
+        });
+    </script>
+</body>
+</html>
